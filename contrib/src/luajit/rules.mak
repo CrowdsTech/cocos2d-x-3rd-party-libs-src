@@ -1,14 +1,14 @@
 # luajit
 
 LUAJIT_VERSION := 2.1.0-beta3
-LUAJIT_URL := http://luajit.org/download/LuaJIT-$(LUAJIT_VERSION).tar.gz
+LUAJIT_GITURL := https://github.com/LuaJIT/LuaJIT.git
 
-$(TARBALLS)/LuaJIT-$(LUAJIT_VERSION).tar.gz:
-	$(call download,$(LUAJIT_URL))
+$(TARBALLS)/LuaJIT-$(LUAJIT_VERSION).tar.xz:
+	$(call download_git,$(LUAJIT_GITURL),v2.1,8271c64)
 
-.sum-luajit: LuaJIT-$(LUAJIT_VERSION).tar.gz
+.sum-luajit: LuaJIT-$(LUAJIT_VERSION).tar.xz
 
-luajit: LuaJIT-$(LUAJIT_VERSION).tar.gz .sum-luajit
+luajit: LuaJIT-$(LUAJIT_VERSION).tar.xz .sum-luajit
 	$(UNPACK)
 ifeq ($(LUAJIT_VERSION),2.0.1)
 	$(APPLY) $(SRC)/luajit/v2.0.1_hotfix1.patch

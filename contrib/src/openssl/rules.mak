@@ -1,6 +1,6 @@
 # OPENSSL
-OPENSSL_VERSION := 1.1.0c
-OPENSSL_URL := https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
+OPENSSL_VERSION := 3.4.0
+OPENSSL_URL := https://github.com/openssl/openssl/releases/download/openssl-${OPENSSL_VERSION}/openssl-${OPENSSL_VERSION}.tar.gz
 
 OPENSSL_EXTRA_CONFIG_1=no-shared no-unit-test
 OPENSSL_EXTRA_CONFIG_2=
