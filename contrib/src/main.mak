@@ -317,7 +317,6 @@ download_git = \
 	rm -Rf $(@:.tar.xz=) && \
 	$(GIT) clone --single-branch $(2:%=--branch %) $(1) $(@:.tar.xz=) && \
 	(cd $(@:.tar.xz=) && $(GIT) config tar.tar.xz.command "xz -c" && $(GIT) checkout $(3:%= %) && $(GIT) archive --format=tar.xz --prefix=$(notdir $(@:.tar.xz=))/ HEAD -o ../$(notdir $@)) && \
-	sha512sum -b $@ && \
 	rm -Rf $(@:.tar.xz=)
 checksum = \
 	$(foreach f,$(filter $(TARBALLS)/%,$^), \
