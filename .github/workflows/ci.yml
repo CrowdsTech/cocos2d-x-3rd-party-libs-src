@@ -1,0 +1,53 @@
+#
+# Copyright (C) 2021 Crowds Technologies LLC. All rights reserved.
+#
+# Distributed under MIT License
+# See: https://github.com/CrowdsTech/cocos2d-x-CI/blob/main/LICENSE
+#
+
+name: CI
+
+on:
+  push:
+    paths:
+    - '.github/workflows/ci.yml'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - variation: mac
+            host: mac
+            os: macos-latest
+          - variation: ios
+            host: mac
+            os: macos-latest
+          - variation: sim
+            host: mac
+            os: macos-latest
+          - variation: linux
+            host: linux
+            os: ubuntu-latest
+          - variation: android
+            host: linux
+            os: ubuntu-latest
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Fix up git URLs as in https://github.com/cocos2d/cocos2d-x/pull/20726#issuecomment-1169406884
+      run: git config --global url.https://github.com/.insteadOf git://github.com/
+    - name: Checkout Sources
+      timeout-minutes: 1
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - name: Install Dependencies (macOS)
+      if: matrix.host == 'mac'
+      timeout-minutes: 8
+      run: brew install automake libtool
+    - name: Build Libraries
+      timeout-minutes: 20
+      run: |
+        ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=all

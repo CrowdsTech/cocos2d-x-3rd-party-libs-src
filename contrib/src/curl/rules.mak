@@ -17,6 +17,11 @@ DEPS_curl = zlib $(DEPS_zlib)
 
 DEPS_curl = openssl $(DEPS_openssl)
 
+ifdef HAVE_MACOSX
+#configure_option=--with-nghttp2=$(HOMEBREW_PREFIX)/opt/libnghttp2 --with-libidn2=$(HOMEBREW_PREFIX)/opt/libidn2
+configure_option=--without-nghttp2 --without-libidn2
+endif
+
 ifdef HAVE_LINUX
 configure_option=--without-libidn --without-librtmp
 endif
