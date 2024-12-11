@@ -49,5 +49,6 @@ jobs:
       run: brew install automake libtool
     - name: Build Libraries
       timeout-minutes: 20
+      working-directory: ./build
       run: |
         ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=all
