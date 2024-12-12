@@ -14,6 +14,10 @@ bullet: libbullet-git.tar.xz .sum-bullet
 	$(APPLY) $(SRC)/bullet/cocos2d.patch
 	$(MOVE)
 
+ifdef HAVE_ANDROID
+EX_ECFLAGS = -Wno-register
+endif
+
 ifdef HAVE_TIZEN
 EX_ECFLAGS = -fPIC
 endif
