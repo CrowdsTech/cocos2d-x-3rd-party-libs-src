@@ -23,13 +23,16 @@ jobs:
           - variation: ios
             host: mac
             os: macos-latest
-          - variation: sim
+          - variation: tvos
             host: mac
             os: macos-latest
           - variation: linux
             host: linux
             os: ubuntu-latest
           - variation: android
+            host: linux
+            os: ubuntu-latest
+          - variation: tizen
             host: linux
             os: ubuntu-latest
       fail-fast: false
@@ -43,12 +46,81 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 1
+    - name: Setup Environment
+      timeout-minutes: 1
+      run: |
+        set -x
+        echo  "ANDROID_NDK=${ANDROID_NDK_ROOT}" >> $GITHUB_ENV
+        set
     - name: Install Dependencies (macOS)
       if: matrix.host == 'mac'
       timeout-minutes: 8
       run: brew install automake libtool
-    - name: Build Libraries
-      timeout-minutes: 20
+    - name: png
       working-directory: ./build
-      run: |
-        ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=all
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=png
+    - name: zlib
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=zlib
+    - name: lua
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=lua
+    - name: luajit
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=luajit
+    - name: websockets
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=websockets
+    - name: freetype
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=freetype
+    - name: jpeg
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=jpeg
+    - name: tiff
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=tiff
+    - name: webp
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=webp
+    - name: chipmunk
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=chipmunk
+    - name: openssl
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=openssl
+    - name: rapidjson
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=rapidjson
+    - name: bullet
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=bullet
+    - name: box2d
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=box2d
+    - name: uv
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=uv
+    - name: glfw
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=glfw
+    - name: glsl_optimizer
+      working-directory: ./build
+      if: always()
+      run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=glsl_optimizer

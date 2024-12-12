@@ -91,13 +91,13 @@ endif
 endif
 
 ifdef HAVE_ANDROID
-CC :=  clang
-CXX := clang++
-AR := $(HOST)-ar
-AS := clang
-LD := $(HOST)-ld
-STRIP := $(HOST)-strip
-RANLIB := $(HOST)-gcc-ranlib
+CC  := $(HOST)$(ANDROID_API)-clang
+CXX := $(HOST)$(ANDROID_API)-clang++
+AR  := llvm-ar
+AS  := llvm-as
+LD  := ld
+STRIP  := llvm-strip
+RANLIB := llvm-ranlib
 EXTRA_CFLAGS += --sysroot=$(ANDROID_TOOLCHAIN_PATH)/sysroot
 endif
 

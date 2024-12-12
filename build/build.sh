@@ -294,7 +294,14 @@ function generate_android_standalone_toolchain()
     fi
 
     api_level=$2
-    toolchain_path="${current_dir}/android-toolchain-${arch}"
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        HOST_TAG=darwin-x86_64
+    else
+        HOST_TAG=linux-x86_64
+    fi
+
+    toolchain_path=${ANDROID_NDK}/toolchains/llvm/prebuilt/${HOST_TAG}
 
     echo "generating android standalone toolchain for ${arch}"
 
@@ -302,11 +309,12 @@ function generate_android_standalone_toolchain()
         return
     fi
 
-    "$ANDROID_NDK/build/tools/make-standalone-toolchain.sh" \
-      --arch="${arch}" \
-      --platform="${api_level}" \
-      --stl=libc++ \
-      --install-dir="${toolchain_path}"
+    # Standalone toolchains are deprecated in NDK r19c
+    # "$ANDROID_NDK/build/tools/make_standalone_toolchain.py" \
+    #   --arch="${arch}" \
+    #   --platform="android-${api_level}" \
+    #   --stl=libc++ \
+    #   --install-dir="${toolchain_path}"
 }
 
 # build all the libraries for different arches
@@ -376,9 +384,9 @@ do
 
         if [ $cfg_platform_name = "android" ];then
             if [ $MY_TARGET_ARCH = "arm64-v8a" ];then
-                export ANDROID_API=android-$cfg_default_arm64_build_api
+                export ANDROID_API=$cfg_default_arm64_build_api
             else
-                export ANDROID_API=android-$build_api
+                export ANDROID_API=$build_api
             fi
 
             generate_android_standalone_toolchain $MY_TARGET_ARCH $ANDROID_API

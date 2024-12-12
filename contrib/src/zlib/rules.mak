@@ -1,6 +1,6 @@
 # ZLIB
-ZLIB_VERSION := 1.2.8
-ZLIB_URL := http://zlib.net/fossils/zlib-$(ZLIB_VERSION).tar.gz
+ZLIB_VERSION := 1.3.1
+ZLIB_URL := https://zlib.net/fossils/zlib-$(ZLIB_VERSION).tar.gz
 
 
 ifeq ($(shell uname),Darwin) # zlib tries to use libtool on Darwin

@@ -266,13 +266,13 @@ check_macosx_sdk()
 check_android_sdk()
 {
         ANDROID_ABI=$MY_TARGET_ARCH
-        
-	[ -z "${ANDROID_NDK}" ] && echo "You must set ANDROID_NDK environment variable" && exit 1
-	add_make "ANDROID_NDK := ${ANDROID_NDK}"
-	[ -z "${ANDROID_ABI}" ] && echo "You must set ANDROID_ABI environment variable" && exit 1
-	add_make "ANDROID_ABI := ${ANDROID_ABI}"
-	[ -z "${ANDROID_API}" ] && echo "You should set ANDROID_API environment variable (using default android-9)" && ANDROID_API := android-9
-	add_make "ANDROID_API := ${ANDROID_API}"
+
+        [ -z "${ANDROID_NDK}" ] && echo "You must set ANDROID_NDK environment variable" && exit 1
+        add_make "ANDROID_NDK := ${ANDROID_NDK}"
+        [ -z "${ANDROID_ABI}" ] && echo "You must set ANDROID_ABI environment variable" && exit 1
+        add_make "ANDROID_ABI := ${ANDROID_ABI}"
+        [ -z "${ANDROID_API}" ] && echo "You should set ANDROID_API environment variable (using default: 9)" && ANDROID_API := 9
+        add_make "ANDROID_API := ${ANDROID_API}"
         
         ## FIXME: the android toolchain path is hardcoded, only MACOSX will work.
         if [ ${ANDROID_ABI} = "x86" ]; then
@@ -281,14 +281,6 @@ check_android_sdk()
             toolchain_path_prefix=aarch64-linux-android
         else
             toolchain_path_prefix=arm-linux-androideabi
-        fi
-
-        # check whether sysroot is exists
-        if [ $ANDROID_ABI = "arm64-v8a" ]; then
-            if [ ! -d ${ANDROID_NDK}/platforms/${ANDROID_API}/arch-arm64 ];then
-                echo "${ANDROID_NDK} ${ANDROID_API} doesn't support build arm64 architecture!"
-                exit $? 
-            fi
         fi
 
         THUMB_FLAG=""
