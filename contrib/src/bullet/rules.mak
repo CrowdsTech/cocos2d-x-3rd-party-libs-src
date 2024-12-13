@@ -12,6 +12,7 @@ $(TARBALLS)/libbullet-git.tar.xz:
 bullet: libbullet-git.tar.xz .sum-bullet
 	$(UNPACK)
 	$(APPLY) $(SRC)/bullet/cocos2d.patch
+	$(APPLY) $(SRC)/bullet/btVector3.h.patch
 	$(MOVE)
 
 ifdef HAVE_ANDROID
