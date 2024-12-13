@@ -40,7 +40,6 @@ jobs:
     defaults:
       run:
         working-directory: ./build
-    continue-on-error: true
 
     steps:
     - name: Checkout Sources
@@ -63,59 +62,65 @@ jobs:
         curl http://download.tizen.org/sdk/Installer/tizen-studio_6.0/web-cli_Tizen_Studio_6.0_ubuntu-64.bin -o install.bin
         chmod a+x install.bin
         ./install.bin --accept-license ${HOME}/tizen-studio
-        echo  "TIZEN_STUDIO_HOME=${HOME}/tizen-studio" >> $GITHUB_ENV
         rm install.bin
+        ${HOME}/tizen-studio/package-manager/package-manager-cli.bin install Certificate-Manager NativeCLI
+        echo "TIZEN_STUDIO_HOME=${HOME}/tizen-studio" >> $GITHUB_ENV
+        echo "${HOME}/tizen-studio/tools/ide/bin"     >> $GITHUB_PATH
       if: matrix.variation == 'tizen'
-      timeout-minutes: 8
     - name: zlib
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=zlib
+      if: always()
     - name: jpeg
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=jpeg
+      if: always()
     - name: tiff
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=tiff
+      if: always()
     - name: webp
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=webp
+      if: always()
     - name: png
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=png
+      if: always()
     - name: freetype
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=freetype
+      if: always()
     - name: chipmunk
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=chipmunk
+      if: always()
     - name: uv
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=uv
-      if: matrix.variation != 'tizen'
+      if: always() && matrix.variation != 'tizen'
     - name: openssl
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=openssl
+      if: always()
     - name: curl
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=curl
+      if: always()
     - name: websockets
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=websockets
+      if: always()
     - name: bullet
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=bullet
-      if: matrix.variation != 'tizen' && matrix.variation != 'tvos'
+      if: always() && matrix.variation != 'tizen' && matrix.variation != 'tvos'
     - name: box2d
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=box2d
-      if: matrix.variation != 'tizen' && matrix.variation != 'tvos'
+      if: always() && matrix.variation != 'tizen' && matrix.variation != 'tvos'
     - name: glfw
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=glfw
-      if: matrix.variation == 'linux' || matrix.variation == 'mac'
+      if: always() && (matrix.variation == 'linux' || matrix.variation == 'mac')
     - name: glsl_optimizer
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=glsl_optimizer
-      if: matrix.variation == 'android' && matrix.variation == 'ios' && matrix.variation == 'mac'
+      if: always() && matrix.variation == 'android' && matrix.variation == 'ios' && matrix.variation == 'mac'
     - name: rapidjson
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=rapidjson
-      if: matrix.variation != 'android'
+      if: always() && matrix.variation != 'android'
     - name: lua
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=lua
-      if: matrix.variation != 'android'
+      if: always() && matrix.variation != 'android'
     - name: luajit
       run: ./build.sh --platform=${{ matrix.variation }} --arch=all --mode=release --libs=luajit
+      if: always()
     - name: SHA 512 Checksums
       run: find ../contrib/tarballs -depth 1 -type f | xargs shasum -a 512 || true
-
-# android: "png" "zlib"       "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl"             "bullet" "box2d" "uv"        "glsl_optimizer"
-# ios:     "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv"        "glsl_optimizer"
-# mac:     "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv" "glfw" "glsl_optimizer"
-# linux:   "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv" "glfw"
-# tizen:   "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson"
-# tvos:    "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson"                  "uv"
+      if: always()
