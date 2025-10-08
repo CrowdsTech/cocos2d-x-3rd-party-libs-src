@@ -116,7 +116,7 @@ jobs:
       if: always() && (matrix.pltf == 'linux' || matrix.pltf == 'mac')
     - name: glsl_optimizer
       run: ./build.sh --platform=${{ matrix.pltf }} --arch=${{ matrix.arch }} --mode=release --libs=glsl_optimizer
-      if: always() && matrix.pltf == 'android' && matrix.pltf == 'ios' && matrix.pltf == 'mac'
+      if: always() && (matrix.pltf == 'android' || matrix.pltf == 'ios' || matrix.pltf == 'mac')
     - name: rapidjson
       run: ./build.sh --platform=${{ matrix.pltf }} --arch=${{ matrix.arch }} --mode=release --libs=rapidjson
       if: always() && matrix.pltf != 'android'
@@ -129,3 +129,10 @@ jobs:
     - name: SHA 512 Checksums
       run: find ../contrib/tarballs -maxdepth 1 -type f | xargs shasum -a 512
       if: always()
+
+# android: "png" "zlib"       "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl"             "bullet" "box2d" "uv"        "glsl_optimizer"
+# ios:     "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv"        "glsl_optimizer"
+# mac:     "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv" "glfw" "glsl_optimizer"
+# linux:   "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson" "bullet" "box2d" "uv" "glfw"
+# tizen:   "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson"
+# tvos:    "png" "zlib" "lua" "luajit" "websockets" "curl" "freetype" "jpeg"  "tiff" "webp" "chipmunk" "openssl" "rapidjson"                  "uv"

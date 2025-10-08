@@ -25,6 +25,7 @@ GNU := http://ftp.gnu.org/gnu
 SF := https://downloads.sourceforge.net/project
 GITHUB := https://github.com
 
+EXTRA_CFLAGS += -v
 
 #
 # Machine-dependent variables
@@ -450,6 +451,7 @@ endif
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)" >> $@
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)" >> $@
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)" >> $@
+	echo "set(CMAKE_POLICY_VERSION_MINIMUM 3.5)" >> $@
 
 # Default pattern rules
 .sum-%: $(SRC)/%/SHA512SUMS
