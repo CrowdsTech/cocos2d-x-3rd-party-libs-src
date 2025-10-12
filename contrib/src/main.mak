@@ -347,7 +347,6 @@ UPDATE_AUTOCONFIG = for dir in $(AUTOMAKE_DATA_DIRS); do \
 RECONF = mkdir -p -- $(PREFIX)/share/aclocal && \
 	cd $< && autoreconf -fiv $(ACLOCAL_AMFLAGS)
 CMAKE = cmake . -DCMAKE_TOOLCHAIN_FILE=$(abspath toolchain.cmake) \
-		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 		-DCMAKE_INSTALL_PREFIX=$(PREFIX)
 
 #
@@ -452,7 +451,6 @@ endif
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)" >> $@
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)" >> $@
 	echo "set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)" >> $@
-	echo "set(CMAKE_POLICY_VERSION_MINIMUM 3.5)" >> $@
 
 # Default pattern rules
 .sum-%: $(SRC)/%/SHA512SUMS

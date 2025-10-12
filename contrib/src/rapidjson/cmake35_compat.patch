@@ -1,0 +1,7 @@
+--- a/example/CMakeLists.txt
++++ b/example/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.5)
+
+ set(RAPIDJSON_EXAMPLES

@@ -1,0 +1,14 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.9)
++cmake_minimum_required(VERSION 3.5)
+
+ include(CheckCSourceCompiles)
+--- a/plugin-standalone/CMakeLists.txt
++++ b/plugin-standalone/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.5)
+
+ if(NOT CMAKE_BUILD_TYPE)

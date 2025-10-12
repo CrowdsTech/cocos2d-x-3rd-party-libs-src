@@ -28,6 +28,7 @@ EX_ECFLAGS = -fPIC
 endif
 
 .bullet: bullet toolchain.cmake
+	$(APPLY) $(SRC)/bullet/cmake35_compat.patch
 	cd $< && $(HOSTVARS) CXXFLAGS="$(CXXFLAGS) $(EX_ECFLAGS)" CFLAGS="$(CFLAGS) $(EX_ECFLAGS)" $(CMAKE) -DCMAKE_BUILD_TYPE=Release -DBUILD_CPU_DEMOS=OFF -DBUILD_EXTRAS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_DEMOS=OFF -DBUILD_MULTITHREADING=ON
 	cd $< && $(MAKE) VERBOSE=1 install
 	touch $@
