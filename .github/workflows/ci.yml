@@ -11,6 +11,9 @@ on:
   push:
     paths:
     - '.github/workflows/ci.yml'
+    - 'build/**'
+    - 'contrib/bootstrap'
+    - 'contrib/src/**'
 
 jobs:
   build:
