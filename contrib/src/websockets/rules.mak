@@ -11,6 +11,7 @@ $(TARBALLS)/libwebsockets-git.tar.xz:
 
 websockets: libwebsockets-git.tar.xz .sum-websockets
 	$(UNPACK)
+	$(APPLY) $(SRC)/websockets/cmake35_compat.patch
 	$(APPLY) $(SRC)/websockets/remove-werror.patch
 	$(MOVE)
 
@@ -28,7 +29,6 @@ ifdef HAVE_TVOS
 endif
 
 .websockets: websockets .zlib .openssl .uv toolchain.cmake
-	$(APPLY) $(SRC)/websockets/cmake35_compat.patch
 	cd $< && $(HOSTVARS) CFLAGS="$(CFLAGS) $(EX_ECFLAGS)" $(CMAKE) -DLWS_WITH_LIBUV=ON -DLWS_WITH_SSL=ON -DLWS_WITH_SHARED=OFF -DLWS_WITHOUT_TEST_SERVER=ON -DLWS_WITHOUT_TEST_SERVER_EXTPOLL=ON -DLWS_WITHOUT_TEST_PING=ON -DLWS_WITHOUT_TEST_ECHO=ON -DLWS_WITHOUT_TEST_CLIENT=ON -DLWS_WITHOUT_TEST_FRAGGLE=ON -DLWS_IPV6=ON $(make_option)
 	cd $< && $(MAKE) VERBOSE=1 install
 	touch $@

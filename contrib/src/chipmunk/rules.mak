@@ -1,7 +1,7 @@
 # chipmunk
 
 CHIPMUNK_VERSION := 7.0.1
-CHIPMUNK_URL := https://chipmunk-physics.net/release/Chipmunk-7.x/Chipmunk-$(CHIPMUNK_VERSION).tgz
+CHIPMUNK_URL := https://bos.us.distfiles.macports.org/chipmunk/Chipmunk-$(CHIPMUNK_VERSION).tgz
 
 $(TARBALLS)/Chipmunk-$(CHIPMUNK_VERSION).tgz:
 	$(call download,$(CHIPMUNK_URL))

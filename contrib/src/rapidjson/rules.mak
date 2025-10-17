@@ -13,10 +13,10 @@ $(TARBALLS)/librapidjson-git.tar.xz:
 
 rapidjson: librapidjson-git.tar.xz .sum-rapidjson
 	$(UNPACK)
+	$(APPLY) $(SRC)/rapidjson/cmake35_compat.patch
 	$(MOVE)
 
 .rapidjson: rapidjson toolchain.cmake
-	$(APPLY) $(SRC)/rapidjson/cmake35_compat.patch
 	cd $< && $(HOSTVARS) ${CMAKE} -DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD_TESTS=OFF
 	cd $< && $(MAKE) VERBOSE=1 install
 	touch $@

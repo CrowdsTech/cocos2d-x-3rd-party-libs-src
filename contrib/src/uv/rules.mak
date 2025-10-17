@@ -9,6 +9,7 @@ $(TARBALLS)/libuv-git.tar.xz:
 uv: libuv-git.tar.xz 
 	$(UNPACK)
 	$(APPLY) $(SRC)/uv/android_remove_pthread_rt.patch
+	$(APPLY) $(SRC)/uv/cmake35_compat.patch
 	$(MOVE)
 
 ifdef HAVE_ANDROID
@@ -16,7 +17,6 @@ cmake_android_def = -DANDROID=1 -DCMAKE_SYSTEM_NAME=Android
 endif
 
 .uv: uv toolchain.cmake
-	$(APPLY) $(SRC)/uv/cmake35_compat.patch
 	cd $< && $(HOSTVARS) CFLAGS="$(CFLAGS) $(EX_ECFLAGS)" $(CMAKE) -DBUILD_TESTING=OFF $(cmake_android_def) $(make_option)
 	cd $< && $(MAKE) VERBOSE=1 install
 	touch $@
