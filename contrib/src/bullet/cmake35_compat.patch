@@ -3,20 +3,22 @@
 @@ -1,4 +1,4 @@
 -cmake_minimum_required(VERSION 2.4.3)
 +cmake_minimum_required(VERSION 3.5)
- set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
- #this line has to appear before 'PROJECT' in order to be able to disable incremental linking
- SET(MSVC_INCREMENTAL_DEFAULT ON)
+set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
+
+#this line has to appear before 'PROJECT' in order to be able to disable incremental linking
 --- a/Demos/DX11ClothDemo/CMakeLists.txt
 +++ b/Demos/DX11ClothDemo/CMakeLists.txt
 @@ -1,4 +1,4 @@
 -cmake_minimum_required(VERSION 2.4)
 +cmake_minimum_required(VERSION 3.5)
 
- IF(${CMAKE_GENERATOR} MATCHES "Visual Studio")
+
+#this line has to appear before 'PROJECT' in order to be able to disable incremental linking
 --- a/Extras/Serialize/makesdna/CMakeLists.txt
 +++ b/Extras/Serialize/makesdna/CMakeLists.txt
 @@ -1,4 +1,4 @@
 -cmake_minimum_required(VERSION 2.4)
 +cmake_minimum_required(VERSION 3.5)
-
- IF(${CMAKE_GENERATOR} MATCHES "Visual Studio")
+   
+IF(COMMAND cmake_policy)
+   cmake_policy(SET CMP0003 NEW)
