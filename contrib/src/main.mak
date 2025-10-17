@@ -332,7 +332,7 @@ UNPACK = $(RM) -R $@ \
 	$(foreach f,$(filter %.tar.xz,$^), && tar xvJf $(f)) \
 	$(foreach f,$(filter %.zip,$^), && unzip $(f))
 UNPACK_DIR = $(patsubst %.tar,%,$(basename $(notdir $<)))
-APPLY = (cd $(UNPACK_DIR) && patch -fp1) <
+APPLY = (cd $(UNPACK_DIR) && patch -flp1) <
 pkg_static = (cd $(UNPACK_DIR) && ../../../contrib/src/pkg-static.sh $(1))
 MOVE = mv $(UNPACK_DIR) $@ && touch $@
 
@@ -346,7 +346,7 @@ UPDATE_AUTOCONFIG = for dir in $(AUTOMAKE_DATA_DIRS); do \
 
 RECONF = mkdir -p -- $(PREFIX)/share/aclocal && \
 	cd $< && autoreconf -fiv $(ACLOCAL_AMFLAGS)
-CMAKE = cmake . -DCMAKE_TOOLCHAIN_FILE=$(abspath toolchain.cmake) \
+CMAKE = cmake . -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_TOOLCHAIN_FILE=$(abspath toolchain.cmake) \
 		-DCMAKE_INSTALL_PREFIX=$(PREFIX)
 
 #

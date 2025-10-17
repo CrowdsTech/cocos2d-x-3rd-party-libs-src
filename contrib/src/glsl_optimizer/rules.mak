@@ -12,6 +12,7 @@ $(TARBALLS)/glsl-optimizer-git.tar.xz:
 glsl_optimizer: glsl-optimizer-git.tar.xz .sum-glslopt
 	$(UNPACK)
 	$(APPLY) $(SRC)/glsl_optimizer/remove_targets.patch
+	$(APPLY) $(SRC)/glsl_optimizer/cmake35_compat.patch
 	$(MOVE)
 
 .glsl_optimizer: glsl_optimizer toolchain.cmake
