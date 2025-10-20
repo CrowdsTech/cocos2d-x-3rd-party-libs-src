@@ -24,7 +24,7 @@ jobs:
             arch: arm64
             os: macos-latest
           - pltf: ios
-            arch: arm64,armv7
+            arch: arm64
             os: macos-latest
           - pltf: tvos
             arch: arm64
