@@ -62,7 +62,7 @@ jobs:
     - name: Install Dependencies (Linux)
       run: |
         sudo apt-get update
-        sudo apt-get install libgl1-mesa-dev libglew-dev libglfw3 libglfw3-dev
+        sudo apt-get install libgl1-mesa-dev libglew-dev libglfw3 libglfw3-dev libxinerama-dev
       if: matrix.pltf == 'linux'
       timeout-minutes: 10
     - name: Install Dependencies (Tizen)
