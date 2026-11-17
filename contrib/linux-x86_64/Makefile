@@ -1,1 +1,0 @@
-../../contrib/src/main.mak
