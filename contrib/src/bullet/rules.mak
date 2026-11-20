@@ -25,7 +25,9 @@ EX_ECFLAGS = -fPIC
 endif
 
 ifdef HAVE_LINUX
+ifndef HAVE_ANDROID
 EX_ECFLAGS = -fPIC
+endif
 endif
 
 .bullet: bullet toolchain.cmake
