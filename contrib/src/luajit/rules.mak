@@ -66,12 +66,17 @@ LUAJIT_HOST_CC="gcc -m64 $(OPTIM) -DLUAJIT_ENABLE_GC64"
 endif
 
 LUAJIT_TARGET_FLAGS="${EXTRA_CFLAGS} ${EXTRA_LDFLAGS}"
-LUAJIT_CROSS_HOST=$(HOST)-
+# 64-bit-offset stdio functions on 32-bit Android require API 24.
+ifneq ($(filter armeabi armeabi-v7a x86,$(MY_TARGET_ARCH)),)
+ifeq ($(shell test $(ANDROID_API) -lt 24 && echo yes),yes)
+LUAJIT_LFS_FLAGS=TARGET_LFSFLAGS=-D_LARGEFILE_SOURCE
+endif
+endif
 endif
 
 .luajit: luajit
 ifdef HAVE_ANDROID
-	cd $< && $(MAKE) -j8 HOST_CC=$(LUAJIT_HOST_CC) CROSS=$(LUAJIT_CROSS_HOST) CC=clang TARGET_SYS=Linux TARGET_FLAGS=$(LUAJIT_TARGET_FLAGS)
+	cd $< && $(MAKE) -j8 HOST_CC=$(LUAJIT_HOST_CC) CC=$(CC) TARGET_AR="$(AR) rcus" TARGET_STRIP=$(STRIP) TARGET_SYS=Linux TARGET_FLAGS=$(LUAJIT_TARGET_FLAGS) $(LUAJIT_LFS_FLAGS)
 endif
 
 ifdef HAVE_MACOSX
